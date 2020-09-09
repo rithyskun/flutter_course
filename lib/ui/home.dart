@@ -1,5 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_course/model/question.dart';
 import 'package:flutter_course/util/hex_color.dart';
+
+class QuizApp extends StatefulWidget {
+  QuizApp({Key key}) : super(key: key);
+
+  @override
+  _QuizAppState createState() => _QuizAppState();
+}
+
+class _QuizAppState extends State<QuizApp> {
+  List questionBank = [
+    Question.name(
+        "The U.S. Declaration of Independence was adopted in 1776.", true),
+    Question.name("The Supreme law of the land is the Constitution.", true),
+    Question.name(
+        "The two rights in the Declaration of Independence are:"
+        "\n Life"
+        "\n Pursuit of happiness.",
+        true),
+    Question.name("The (U.S.) Contitution has 26 Amendments.", false)
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("True Citizen"),
+        centerTitle: true,
+      ),
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: Image.asset(
+                "images/flag.png",
+                width: 250,
+                height: 180,
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(14.4),
+                  border: Border.all(
+                      color: Colors.blueGrey.shade200,
+                      style: BorderStyle.solid)),
+              height: 120,
+              child: Center(
+                  child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  questionBank[1].questionText,
+                  style: TextStyle(fontSize: 16.9, color: Colors.black),
+                ),
+              )),
+            ),
+            Spacer(),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 // BillSpitter
 class BillSplitter extends StatefulWidget {
@@ -160,7 +223,7 @@ class _BillSplitterState extends State<BillSplitter> {
                     Padding(
                       padding: const EdgeInsets.all(18.0),
                       child: Text(
-                        "\$ ${calculateTotalTip(_billAmount, _personCounter, _tipPercentage)}",
+                        "\$ ${(calculateTotalTip(_billAmount, _personCounter, _tipPercentage)).toStringAsFixed(2)}",
                         style: TextStyle(
                             color: _purple,
                             fontWeight: FontWeight.bold,
@@ -184,7 +247,7 @@ class _BillSplitterState extends State<BillSplitter> {
                       max: 100,
                       activeColor: _purple,
                       inactiveColor: Colors.grey,
-                      divisions: 10, //optional
+                      // divisions: 10, //optional
                       value: _tipPercentage.toDouble(),
                       onChanged: (double newValue) {
                         setState(() {
